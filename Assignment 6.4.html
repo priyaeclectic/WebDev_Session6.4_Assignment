@@ -1,0 +1,72 @@
+<html>
+<head>
+	<title> Assignment 6.4 </title>
+</head>
+<body>
+
+	<input type="button" value="Add row" onclick="addRow()"><br>
+	<input type="button" value="Add column" onclick="addColumn()"><br>
+	<input type="button" value="Delete rows" onclick="deleteRows()"><br>
+	<input type="button" value="Delete columns" onclick="deleteColumns()"><br>
+
+	<table id="sampleTable" width="350px" border="1">
+		<tr>
+			<td>1</td>
+		</tr>
+	</table>
+	<div id="info"></div>
+</body>
+<script type="text/javascript">
+	// delete last row from the table
+	function deleteRows() {
+	    var tbl = document.getElementById('sampleTable'), 
+	        lrow = tbl.rows.length - 1;             // get last row's index
+	        tbl.deleteRow(lrow);
+	    document.getElementById("info").innerHTML="Number of rows are "+tbl.rows.length+" and number of columns are "+tbl.rows[0].cells.length;    
+	}
+ 
+	// delete last column from the table
+	function deleteColumns() {
+	    var tbl = document.getElementById('sampleTable'), 
+	        lcol = tbl.rows[0].cells.length - 1,    // get last column's index
+	        i;
+	    
+	    for (i = 0; i < tbl.rows.length; i++) {
+	            tbl.rows[i].deleteCell(lcol);
+	    }
+	    document.getElementById("info").innerHTML="Number of rows are "+tbl.rows.length+" and number of columns are "+tbl.rows[0].cells.length;
+	}
+
+	// add column to the end of the table
+	function addColumn() {
+	    var tbl = document.getElementById('sampleTable'), 
+	        i;
+	    // browse through each row and add a cell at the end
+	    for (i = 0; i < tbl.rows.length; i++) {
+	        createCell(tbl.rows[i].insertCell(tbl.rows[i].cells.length), i);
+	    }
+	    document.getElementById("info").innerHTML="Number of rows are "+tbl.rows.length+" and number of columns are "+tbl.rows[0].cells.length;
+	}
+
+	// add row at the end of the table
+	function addRow() {
+	    var tbl = document.getElementById('sampleTable'), 
+	        row = tbl.insertRow(tbl.rows.length),      // add row at the end
+	        i;
+	    // insert table cells to the new row
+	    for (i = 0; i < tbl.rows[0].cells.length; i++) {
+	        createCell(row.insertCell(i), i);
+	    }
+	    document.getElementById("info").innerHTML="Number of rows are "+tbl.rows.length+" and number of columns are "+tbl.rows[0].cells.length;
+	}
+ 
+	// create content for the added cell
+	function createCell(cell, text) {
+	    var div = document.createElement('div'), // create DIV element
+	        txt = document.createTextNode(text); // create text node
+	    div.appendChild(txt);                    // append text node to the DIV
+	    cell.appendChild(div);                   // append DIV to the table cell
+	}
+
+</script>
+</html>
